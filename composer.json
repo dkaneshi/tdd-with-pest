@@ -23,5 +23,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "require": {
+        "nikic/fast-route": "^1.3",
+        "league/container": "^5.1"
     }
 }
