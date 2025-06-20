@@ -17,7 +17,7 @@ class Request
     public static function create(
         string $method,
         string $uri,
-        array $server,
+        array $server = [],
         string $content = ''
     ): self
     {
