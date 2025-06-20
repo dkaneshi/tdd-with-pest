@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Kernel;
+use App\Routing\RouteHandlerResolver;
 use App\Routing\Router;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
@@ -13,7 +14,12 @@ $container->delegate(new ReflectionContainer(true));
 $routes = include __DIR__.'/routes.php';
 
 // services
-$container->add(Router::class);
+$container->add(RouteHandlerResolver::class)
+    ->addArguments([$container]);
+
+$container->add(Router::class)
+    ->addArguments([\App\Routing\RouteHandlerResolver::class]);
+
 $container->extend(Router::class)
     ->addMethodCall('setRoutes', [$routes]);
 
