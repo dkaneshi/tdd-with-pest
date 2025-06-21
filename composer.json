@@ -28,6 +28,6 @@
     "require": {
         "ext-pdo": "*",
         "nikic/fast-route": "^1.3",
-        "league/container": "^5.1",
+        "league/container": "^5.1"
     }
 }
