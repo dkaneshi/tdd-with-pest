@@ -1,11 +1,13 @@
 <?php
 
+use App\Database\Connection;
 use App\Repository\BookRepository;
 
 it('returns the correct book data by ID', function () {
     // Arrange
     $bookId = 990;
-    $bookRepository = new BookRepository();
+    $connection = $this->container->get(Connection::class);
+    $bookRepository = new BookRepository($connection);
 
     // Act
     $foundBook = $bookRepository->findById($bookId);
