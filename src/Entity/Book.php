@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-class Book
+use JsonSerializable;
+
+class Book implements JsonSerializable
 {
     public function __construct(
         private ?int $id,
@@ -23,4 +25,8 @@ class Book
         return $this->id;
     }
 
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
+    }
 }
