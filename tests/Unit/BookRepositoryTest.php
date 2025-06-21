@@ -14,7 +14,7 @@ it('returns the correct book data by ID', function () {
     expect($foundBook)
         ->toMatchObject([
             'title' => 'A Test Book',
-            'yearPublished' => 2021,
+            'yearPublished' => 1999,
         ])
         ->and($foundBook->author)
         ->toMatchObject([

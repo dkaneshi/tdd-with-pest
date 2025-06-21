@@ -4,20 +4,47 @@ namespace App\Repository;
 
 use App\Entity\Author;
 use App\Entity\Book;
+use PDO;
 
 class BookRepository
 {
     public function findById(int $id): ?Book
     {
-        // Retrieve the book data frm teh database
-        $row = [
-            'id' => 990,
-            'title' => 'A Test Book',
-            'year_published' => 2021,
-            'author_id' => 123,
-            'author_name' => 'A. N. Author',
-            'author_bio' => 'This is an author'
-        ];
+        // Instantiate a PDO instance
+        $dsn = 'sqlite:db/tdd-with-pest.sqlite';
+        $pdo = new PDO($dsn);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+        // Prepare the statement (SQL)
+        $stmt = $pdo->prepare("SELECT
+                                books.id, 
+                                books.title, 
+                                books.year_published, 
+                                authors.id AS author_id, 
+                                authors.name AS author_name, 
+                                authors.bio AS author_bio
+                            FROM 
+                                books
+                            INNER JOIN 
+                                authors 
+                            ON 
+                                books.author_id = authors.id
+                            WHERE 
+                                books.id = :id");
+
+        // Execute the statement
+        $stmt->execute(['id' => $id]);
+
+        // Fetch the data
+        $row = $stmt->fetch();
+
+        // Check for existence of a row
+        if (! $row) {
+            return null;
+        }
+
+        // Use the row of data to build the object(s)
 
         $author = Author::create(
             id: $row['author_id'],
