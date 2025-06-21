@@ -3,9 +3,28 @@
 use App\Database\Connection;
 use App\Repository\BookRepository;
 
+beforeEach(function () {
+    $this->migrateTestDatabase();
+});
+
+
 it('returns the correct book data by ID', function () {
     // Arrange
     $bookId = 990;
+
+    // Create an $author object
+
+    // Instantiate an AuthorMapper
+
+    // Persist the $author
+
+    // Create a $book object
+
+    // Instantiate a BookMapper
+
+    // Persist the $book
+
+
     $connection = $this->container->get(Connection::class);
     $bookRepository = new BookRepository($connection);
 
