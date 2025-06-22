@@ -4,7 +4,7 @@ use App\Controller\BooksController;
 use App\Routing\RouteHandlerResolver;
 
 beforeEach(function () {
-    $this->container = include dirname(__DIR__, 2) . '/config/services.php';
+    $this->container = include dirname(__DIR__, 3) . '/config/services.php';
 });
 
 it('resolves the correct route handler closure', function () {

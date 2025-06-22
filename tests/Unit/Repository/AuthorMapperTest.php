@@ -23,4 +23,4 @@ it('saves an Author to the database', function () {
         'bio' => 'A math genius'
     ]);
 
-});
+})->group('integration');

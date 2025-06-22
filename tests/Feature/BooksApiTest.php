@@ -86,4 +86,4 @@ it('retrieves the correct book data from the books API', function (
             'bio' => 'Martin\'s bio'
         ]
     ]
-]);
+])->group('integration');

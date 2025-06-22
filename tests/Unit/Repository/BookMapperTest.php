@@ -23,4 +23,4 @@ it('saves a Book to the database', function () {
         'year_published' => 1999,
         'author_id' => $author->getId(),
     ]);
-});
+})->group('integration');
