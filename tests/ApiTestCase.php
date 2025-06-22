@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Command\Migrate;
 use App\Database\Connection;
+use App\Database\Database;
 use App\Http\Kernel;
 use App\Http\Request;
 use App\Http\Response;
@@ -18,6 +19,7 @@ abstract class ApiTestCase extends BaseTestCase
     protected function setup(): void
     {
         $this->container = include dirname(__DIR__).'/config/services.php';
+        $this->connection = $this->container->get(Connection::class);
     }
 
     public function json(
@@ -63,5 +65,16 @@ abstract class ApiTestCase extends BaseTestCase
         $migrate = new Migrate($connection, $migrationsFolder);
 
         $migrate->execute();
+    }
+
+    public function assertDatabaseHas(string $tablename, array $criteria): void
+    {
+        // Instantiate a DB object which can be used to query any table.
+        $db = new Database($this->connection);
+
+        $result = $db->fetchRecords($tablename, $criteria);
+
+        // Assert that at least one record was found
+        $this->assertGreaterThan(0, count($result));;
     }
 }
