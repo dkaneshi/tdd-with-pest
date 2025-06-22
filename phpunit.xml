@@ -5,7 +5,7 @@
          colors="true"
 >
     <php>
-        <env name="DSN" value="sqlite:memory:" />
+        <env name="DSN" value="sqlite::memory:" />
         <env name="APP_ENV" value="test" />
     </php>
     <testsuites>
