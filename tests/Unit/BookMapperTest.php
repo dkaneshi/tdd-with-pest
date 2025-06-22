@@ -5,6 +5,10 @@ use App\Entity\Book;
 use App\Repository\AuthorMapper;
 use App\Repository\BookMapper;
 
+beforeEach(function () {
+    $this->migrateTestDatabase();
+});
+
 it('saves a Book to the database', function () {
     $author = Author::create(null, 'Alan Turing', 'A math genius');
     $authorMapper = new AuthorMapper($this->connection);
