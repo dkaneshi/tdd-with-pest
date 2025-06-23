@@ -10,10 +10,21 @@ class Request
         private readonly array $queryParams,  // $_GET
         private readonly array $serverVars = [],  // $_SERVER
         private array $postParams = [],  // $_POST
-        private array $cookies = [],
-        private array $files = [],
+        private array $cookies = [],  // $_COOKIE
+        private array $files = [],  // $_FILES
     )
     {
+    }
+
+    public static function createFromGlobals(): self
+    {
+        return new self(
+            $_GET,
+            $_SERVER,
+            $_POST,
+            $_COOKIE,
+            $_FILES
+        );
     }
 
     public static function create(
