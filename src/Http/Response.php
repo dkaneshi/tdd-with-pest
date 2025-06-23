@@ -6,13 +6,13 @@ namespace App\Http;
 
 class Response
 {
-    public const HTTP_OK = 200;
-    public const HTTP_NOT_FOUND = 404;
-    public const HTTP_INTERNAL_SERVER_ERROR = 500;
-    public const HTTP_BAD_REQUEST = 400;
-    public const HTTP_UNAUTHORIZED = 401;
-    public const HTTP_FORBIDDEN = 403;
-    public const HTTP_METHOD_NOT_ALLOWED = 405;
+    const int HTTP_OK = 200;
+    const int HTTP_NOT_FOUND = 404;
+    const int HTTP_INTERNAL_SERVER_ERROR = 500;
+    const int HTTP_BAD_REQUEST = 400;
+    const int HTTP_UNAUTHORIZED = 401;
+    const int HTTP_FORBIDDEN = 403;
+    const int HTTP_METHOD_NOT_ALLOWED = 405;
 
     public function __construct(
         private readonly string $body = '',
@@ -29,5 +29,15 @@ class Response
     public function getStatusCode(): int
     {
         return $this->statusCode;
+    }
+
+    public function send(): void
+    {
+//        http_response_code($this->statusCode);
+//        foreach ($this->headers as $header) {
+//            header($header);
+//        }
+        echo $this->body;
+
     }
 }
