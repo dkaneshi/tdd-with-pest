@@ -13,7 +13,7 @@ class AuthorMapper
     public function __construct(private Connection $connection)
     {}
 
-    public function save(Author $author)
+    public function save(Author $author): void
     {
         // Prepare the statement
         $stmt = $this->connection->getPdo()->prepare("
