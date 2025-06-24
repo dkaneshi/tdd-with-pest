@@ -2,6 +2,7 @@
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Http\JsonResponse;
 use App\Http\Response;
 use App\Repository\AuthorMapper;
 use App\Repository\BookMapper;
@@ -58,6 +59,10 @@ it('retrieves the correct book data from the books API', function (
                 'name' => $author['name'],
                 'bio' => $author['bio']
             ]
+        ])
+        ->and($response)->toBeInstanceOf(JsonResponse::class)
+        ->and($response->getHeaders())->toMatchArray([
+            'Content-Type' => 'application/json'
         ]);
 })->with([
     'book 1' => [

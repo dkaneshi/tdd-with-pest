@@ -46,6 +46,10 @@ class Response
 
         // Flush the buffer, sending the content to the client
         ob_end_flush();
+    }
 
+    public function getHeaders(): array
+    {
+        return $this->headers;
     }
 }
