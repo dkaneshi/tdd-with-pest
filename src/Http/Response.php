@@ -33,11 +33,19 @@ class Response
 
     public function send(): void
     {
-//        http_response_code($this->statusCode);
-//        foreach ($this->headers as $header) {
-//            header($header);
-//        }
+        // Start output buffering
+        ob_start();
+
+        // Send headers
+        foreach ($this->headers as $key => $value) {
+            header("$key: $value");  // e.g. "Content-Type: application/json";
+        }
+
+        // This will actually add the content to the buffer
         echo $this->body;
+
+        // Flush the buffer, sending the content to the client
+        ob_end_flush();
 
     }
 }
