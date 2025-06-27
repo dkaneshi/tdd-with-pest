@@ -2,6 +2,8 @@
 
 use App\Database\Connection;
 use App\Http\Kernel;
+use App\Http\Middleware\RequestHandler;
+use App\Http\Middleware\RequestHandlerInterface;
 use App\Routing\RouteHandlerResolver;
 use App\Routing\Router;
 use League\Container\Argument\Literal\StringArgument;
@@ -35,8 +37,13 @@ $container->add(Router::class)
 $container->extend(Router::class)
     ->addMethodCall('setRoutes', [$routes]);
 
+$container->add(
+    RequestHandlerInterface::class,
+    RequestHandler::class
+)->addArgument($container);
+
 $container->add(Kernel::class)
-    ->addArguments([Router::class]);
+    ->addArguments([RequestHandlerInterface::class]);
 
 $container->addShared(Connection::class)
     ->addArguments(['dsn']);
