@@ -26,6 +26,8 @@ $container->add(
     'migrations_folder',
     new StringArgument($migrationsFolder)
 );
+$jwtSecretKey = $_ENV['JWT_SECRET_KEY'];
+$container->add('jwtSecretKey', new StringArgument($jwtSecretKey));
 
 // services
 $container->add(RouteHandlerResolver::class)
