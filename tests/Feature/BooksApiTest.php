@@ -6,6 +6,7 @@ use App\Http\JsonResponse;
 use App\Http\Response;
 use App\Repository\AuthorMapper;
 use App\Repository\BookMapper;
+use Firebase\JWT\JWT;
 
 beforeEach(function () {
     $this->migrateTestDatabase();
@@ -17,6 +18,24 @@ it('retrieves the correct book data from the books API', function (
     array $author
 ) {
     // Arrange
+    $key = $this->container->get('jwtSecretKey');
+
+    $issuedAt = time();
+
+    $payload = [
+        'iss' => 'https://books-api.org',
+        'aud' => 'https://books-api.com',
+        'iat' => $issuedAt,
+        'nbf' => $issuedAt,
+        'exp' => $issuedAt + 3600,
+        'data' => [
+            'username' => 'david',
+            'plan' => 'premium',
+        ]
+    ];
+
+    $jwt = JWT::encode($payload, $key, 'HS256');
+
     // Data fixtures
     // Create Author object
     $storedAuthor = Author::create(
@@ -46,7 +65,7 @@ it('retrieves the correct book data from the books API', function (
     $bookMapper->save($storedBook);;
 
     // Act
-    $response = $this->json(method: 'GET', uri: $uri); // $uri
+    $response = $this->json(method: 'GET', uri: $uri, headers: ['HTTP_AUTHORIZATION' => 'Bearer '.$jwt]); // $uri
 
     // Assert
     expect($response->getStatusCode())->toBeInt()->toBe(Response::HTTP_OK)

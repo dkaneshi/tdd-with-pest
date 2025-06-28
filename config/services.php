@@ -2,6 +2,7 @@
 
 use App\Database\Connection;
 use App\Http\Kernel;
+use App\Http\Middleware\JwtAuthenticate;
 use App\Http\Middleware\RequestHandler;
 use App\Http\Middleware\RequestHandlerInterface;
 use App\Routing\RouteHandlerResolver;
@@ -49,5 +50,8 @@ $container->add(Kernel::class)
 
 $container->addShared(Connection::class)
     ->addArguments(['dsn']);
+
+$container->add(JwtAuthenticate::class)
+    ->addArgument('jwtSecretKey');
 
 return $container;
